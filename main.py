@@ -35,7 +35,7 @@ SUBTRACT_BUTTON_ID = 2
 
 class MyGrid(gridlib.Grid):
     def __init__(self, parent):
-        super().__init__(parent, pos=(10, 150), size=(550, 100))
+        super().__init__(parent, pos=(10, 170), size=(550, 100))
 
         # Create a 10x3 grid initially
         self.CreateGrid(0, 4)
@@ -89,10 +89,10 @@ class Form(wx.Frame):
         self.Pan = wx.Panel(self, -1)
 
         self.streminder = wx.StaticText(self.Pan, label='Reminder', pos=(10, 40), size=(70, 20))
-        self.tcReminder = wx.TextCtrl(self.Pan, pos=(80, 40), size=(70, 20))
+        self.tcReminder = wx.TextCtrl(self.Pan, pos=(80, 40), size=(400, 80), style=wx.TE_MULTILINE)
 
-        self.stdue_date = wx.StaticText(self.Pan, label='Due Date', pos=(10, 70), size=(70, 20))
-        self.due_date = wx.adv.DatePickerCtrl(self.Pan, pos=(80, 70), size=(130, 20), style=wx.adv.DP_DROPDOWN | wx.adv.DP_SHOWCENTURY)
+        self.stdue_date = wx.StaticText(self.Pan, label='Due Date', pos=(10, 130), size=(70, 20))
+        self.due_date = wx.adv.DatePickerCtrl(self.Pan, pos=(80, 130), size=(130, 20), style=wx.adv.DP_DROPDOWN | wx.adv.DP_SHOWCENTURY)
 
         self.reminder_grid = MyGrid(self.Pan)
         self.btnStore = wx.Button(self.Pan, id=ADD_BUTTON_ID, label='Store', pos=(10, 130), size=(50,20))
@@ -145,30 +145,12 @@ class Form(wx.Frame):
         self.reminder_grid.clear_grid()
         self.display_reminders_on_grid()
 
-    def Addition(self):
-        try:
-            num1 = int(self.tcReminder.Value)
-            num2 = int(self.tcNumber2.Value)
-
-            self.tcResult.Value = str(num1 + num2)
-        except Exception as err:
-            wx.MessageBox(str(err))
-
-    def Subtraction(self):
-        try:
-            num1 = int(self.tcReminder.Value)
-            num2 = int(self.tcNumber2.Value)
-
-            self.tcResult.Value = str(num1 - num2)
-        except Exception as err:
-            wx.MessageBox(str(err))
-
     def Evt_Resize(self, evt):
         nHeight = self.GetSize()[1]
         nWidth = self.GetSize()[0]
         
         self.btnStore.SetPosition((10, (nHeight -60)))
-        self.reminder_grid.SetPosition((10, 150))
+        self.reminder_grid.SetPosition((10, 170))
         
         self.reminder_grid.SetSize(((nWidth - 70), (nHeight - 250)))
 
