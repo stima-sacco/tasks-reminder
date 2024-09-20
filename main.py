@@ -130,20 +130,28 @@ class Form(wx.Frame):
       return difference.days
 
     def Evt_Store(self, evt):
-        nButtonId = evt.GetId()
+        try:
+            nButtonId = evt.GetId()
 
-        reminder = self.tcReminder.Value
-        due_date = self.due_date.Value
+            reminder = self.tcReminder.Value
+            due_date = self.due_date.Value
 
-        date_str = due_date.FormatISODate()
+            date_str = due_date.FormatISODate()
 
-        sql = """INSERT INTO reminders (reminder, due_date)
-        VALUES ('""" + reminder + """','""" + date_str + """')"""
-        
-        execute_query(sql, 'INSERT')
+            sql = """INSERT INTO reminders (reminder, due_date)
+            VALUES ('""" + reminder + """','""" + date_str + """')"""
+            
+            execute_query(sql, 'INSERT')
 
-        self.reminder_grid.clear_grid()
-        self.display_reminders_on_grid()
+            if self.reminder_grid.GetNumberRows() > 0:
+              self.reminder_grid.clear_grid()
+
+            self.display_reminders_on_grid()
+
+            wx.MessageBox('Row added successfully!', "Information", wx.OK | wx.ICON_INFORMATION)
+            self.tcReminder.Value = ''
+        except Exception as err:
+          wx.MessageBox(str(err), "Information", wx.OK | wx.ICON_INFORMATION)
 
     def Evt_Resize(self, evt):
         nHeight = self.GetSize()[1]

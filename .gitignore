@@ -1,1 +1,4 @@
 *.db
+*.spec
+build/
+dist/
