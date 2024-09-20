@@ -63,6 +63,10 @@ class MyGrid(gridlib.Grid):
             self.SetCellBackgroundColour(row, col, color)
         self.ForceRefresh()
 
+    def clear_grid(self):
+        # Clear all rows from the grid
+        self.DeleteRows(0, self.GetNumberRows())
+
     def add_new_row(self, values):
         # Add one new row to the grid
         self.AppendRows(1)
@@ -137,6 +141,9 @@ class Form(wx.Frame):
         VALUES ('""" + reminder + """','""" + date_str + """')"""
         
         execute_query(sql, 'INSERT')
+
+        self.reminder_grid.clear_grid()
+        self.display_reminders_on_grid()
 
     def Addition(self):
         try:
